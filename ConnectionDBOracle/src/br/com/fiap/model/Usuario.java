@@ -15,7 +15,7 @@ public class Usuario {
 	public Usuario(String nome, String email) {
 		this.nome = nome;
 		this.email = email;
-		this.dataCadastro = new Date(0);
+		this.dataCadastro = new Date(System.currentTimeMillis());
 	}
 
 	public Usuario(Long id, String nome, String email, Date dataCadastro) {

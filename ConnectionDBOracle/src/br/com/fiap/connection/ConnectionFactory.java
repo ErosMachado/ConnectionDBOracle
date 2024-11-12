@@ -13,11 +13,11 @@ public class ConnectionFactory {
 			// lembrar de, caso dê erro, há duas possibilidades:
 			// 1. confuguração no eclipse: run as --> Run Configurations --> Environment
 			// 2. adicionar no CMD (se for windows) com o comando "set"
-			String user = System.getenv("DB_USUARIO");
-			String password = System.getenv("DB_SENHA");
+			String usuario = System.getenv("DB_USUARIO");
+			String senha = System.getenv("DB_SENHA");
 
 			// Estabelece a conexão usando as credenciais das variáveis de ambiente
-			return DriverManager.getConnection(url, user, password);
+			return DriverManager.getConnection(url, usuario, senha);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

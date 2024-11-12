@@ -12,11 +12,20 @@ public class Usuario {
 	private Date dataCadastro;
 
 	// construtor
-	public Usuario(String nome, String email, Date dataCadastro) {
+	public Usuario(String nome, String email) {
 		this.nome = nome;
 		this.email = email;
 		this.dataCadastro = new Date(0);
+	}
 
+	public Usuario(Long id, String nome, String email, Date dataCadastro) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.dataCadastro = new Date(0);
+	}
+
+	public Usuario() {
 	}
 
 	// Começo: getters and Setters:

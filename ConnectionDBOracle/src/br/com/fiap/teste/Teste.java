@@ -24,10 +24,10 @@ public class Teste {
 		lista = dao.selectAll();
 
 		for (Usuario usuario : lista) {
-			System.out.println("ID: "+ usuario.getId());
+			System.out.println("ID: " + usuario.getId());
 			System.out.println("Nome: " + usuario.getNome());
 			System.out.println("Email: " + usuario.getEmail());
-			System.out.println("Data de Cadastro: "+usuario.getDataCadastro());
+			System.out.println("Data de Cadastro: " + usuario.getDataCadastro());
 		}
 	}
 

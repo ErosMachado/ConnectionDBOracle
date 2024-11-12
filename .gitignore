@@ -1,18 +1,53 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
-
-# Other files and folders
+# Ignorar arquivos e pastas do Eclipse
+.project
+.classpath
 .settings/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# Ignorar pastas de compilação e binários
+bin/
+target/
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# Ignorar dependências baixadas pelo Maven e Gradle
+.mvn/
+.gradle/
+build/
+
+# Ignorar logs, caches e temporários
+*.log
+*.tmp
+*.cache
+*.diff
+*.patch
+hs_err_pid*
+
+# Ignorar arquivos de configuração de conexão sensíveis
+*.env
+.env
+
+# Ignorar arquivos de sistema operacionais
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos e pastas do IntelliJ IDEA (caso o projeto seja aberto nele também)
+.idea/
+*.iml
+
+# Ignorar bibliotecas baixadas localmente
+lib/
+
+# Ignorar arquivos de configurações de execução do Eclipse
+*.launch
+
+# Ignorar arquivos específicos do Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Ignorar arquivos específicos do banco de dados, se houver algum dump ou arquivo SQL
+*.sql
+*.db
+
+# Ignorar arquivos de configuração de usuário, caso opte por manter um arquivo de configuração localmente
+config/credentials.txt

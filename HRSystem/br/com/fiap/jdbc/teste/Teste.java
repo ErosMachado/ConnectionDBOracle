@@ -15,9 +15,9 @@ public class Teste {
 		// 1. Teste de Inserção
 		System.out.println("Inserindo candidatos...");
 		Candidato emerson = new Candidato("Emerson", "99999-0000", "emerson@gmail.com", "Rua A", "Engenheiro",
-				"13/11/1978", Genero.MASCULINO, 20, 1);
+				"13/02/1979", Genero.MASCULINO, 20, 1);
 		Candidato adriane = new Candidato("Adriane", "88888-1111", "adriane@gmail.com", "Rua B", "Analista",
-				"13/11/1977", Genero.FEMININO, 10, 2);
+				"10/12/1978", Genero.FEMININO, 10, 2);
 		daoCandidato.insert(emerson);
 		daoCandidato.insert(adriane);
 		System.out.println("Inserção concluída.\n");

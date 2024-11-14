@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.jdbc.factory.ConnectionFactory;
 import br.com.fiap.jdbc.model.AreaAtuacao;
 import br.com.fiap.jdbc.model.Candidato;
 
@@ -16,17 +15,17 @@ public class AreaAtuacaoDAO {
 
 	private Connection connection;
 
-	public AreaAtuacaoDAO() {
-		this.connection = new ConnectionFactory().conectar();
+	public AreaAtuacaoDAO(Connection connection) {
+		this.connection = connection;
 	}
 
-	public List<AreaAtuacao> listarAreaAtuacaoComCandidato() {
+	public List<AreaAtuacao> selectAreaAtuacaoCandidato() {
 		try {
 			AreaAtuacao areaAtual = null;
 			Candidato candidato = null;
 			List<AreaAtuacao> areas = new ArrayList<AreaAtuacao>();
 			String sql = "SELECT A.idArea, A.nome, A.descricao, C.idCandidato, C.nome,  C.telefone, C.email, C.endereco, C.formacao, C.dataNasc, C.genero, C.tempoExperiencia, C.idArea"
-					+ " FROM AREA A INNER JOIN CANDIDATO C ON A.idArea = C.idArea order by C.idArea";
+					+ "FROM AREA A INNER JOIN CANDIDATO C ON A.idArea = C.idArea order by C.idArea";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.execute();
 			ResultSet rs = stmt.getResultSet();

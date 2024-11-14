@@ -7,41 +7,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.connection.ConnectionFactory;
+import br.com.fiap.jdbc.factory.ConnectionFactory;
 import br.com.fiap.jdbc.model.Candidato;
 
 public class CandidatoDAO {
 
 	private Connection connection;
 
-	public CandidatoDAO() {
-		this.connection = new ConnectionFactory().conectar();
+	public CandidatoDAO(Connection connection) {
+		this.connection = connection;
 	}
+    public CandidatoDAO() {
+        this.connection = new ConnectionFactory().conectar();
+        if (this.connection == null) {
+            throw new IllegalStateException("Falha ao conectar ao banco de dados.");
+        }
+    }
 
 	// insert
 	public void insert(Candidato candidato) {
-	    String sql = "INSERT INTO candidato (idCandidato, nome, dataNasc, genero, tempoExperiencia, formacao, telefone, email, endereco, idArea) VALUES (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into candidato (nome, telefone, email, endereco, formacao, dataNasc, genero, tempoExperiencia, idArea) values (?,?,?,?,?,?,?,?,?)";
 
-	    try {
-	        PreparedStatement stmt = connection.prepareStatement(sql);
-	        stmt.setLong(1, candidato.getIdCandidato()); // idCandidato
-	        stmt.setString(2, candidato.getNome()); // nome
-	        stmt.setObject(3, candidato.getDataNasc()); // dataNasc
-	        stmt.setString(4, candidato.getGenero().getCodigo()); // genero
-	        stmt.setFloat(5, candidato.getTempoExperiencia()); // tempoExperiencia
-	        stmt.setString(6, candidato.getFormacao()); // formacao
-	        stmt.setString(7, candidato.getTelefone()); // telefone
-	        stmt.setString(8, candidato.getEmail()); // email
-	        stmt.setString(9, candidato.getEndereco()); // endereco
-	        stmt.setLong(10, candidato.getIdArea()); // idArea
-	        stmt.execute();
-	        connection.commit(); // Adicione esta linha
-	        stmt.close();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, candidato.getNome());
+			stmt.setString(2, candidato.getTelefone());
+			stmt.setString(3, candidato.getEmail());
+			stmt.setString(4, candidato.getEndereco());
+			stmt.setString(5, candidato.getFormacao());
+			stmt.setObject(6, candidato.getDataNasc());
+			stmt.setString(7, candidato.getGenero().getCodigo());
+			stmt.setInt(8, candidato.getTempoExperiencia());
+			stmt.setLong(9, candidato.getIdArea());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
 
 	// delete
 	public void delete(long id) {
@@ -109,30 +112,30 @@ public class CandidatoDAO {
 
 	// selectById
 	public Candidato selectById(long id) {
-	    Candidato candidato = null;
-	    String sql = "SELECT * FROM candidato WHERE idCandidato=?";
-	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-	        stmt.setLong(1, id);
-	        try (ResultSet rs = stmt.executeQuery()) {
-	            if (rs.next()) {
-	                candidato = new Candidato();
-	                candidato.setIdCandidato(rs.getLong("idCandidato"));
-	                candidato.setNome(rs.getString("nome"));
-	                candidato.setTelefone(rs.getString("telefone"));
-	                candidato.setEmail(rs.getString("email"));
-	                candidato.setEndereco(rs.getString("endereco"));
-	                candidato.setDataNasc(rs.getTimestamp("dataNasc").toLocalDateTime().toLocalDate());
-	                candidato.setGenero(rs.getString("genero"));
-	                candidato.setTempoExperiencia(rs.getInt("tempoExperiencia"));
-	                candidato.setIdArea(rs.getLong("idArea"));
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return candidato;
+		Candidato candidato = null;
+		String sql = "select * from candidato where idCandidato=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				candidato = new Candidato();
+				candidato.setIdCandidato(rs.getLong("idCandidato"));
+				candidato.setNome(rs.getString("nome"));
+				candidato.setTelefone(rs.getString("telefone"));
+				candidato.setEmail(rs.getString("email"));
+				candidato.setEndereco(rs.getString("endereco"));
+				candidato.setDataNasc(rs.getTimestamp("dataNasc").toLocalDateTime().toLocalDate());
+				candidato.setGenero(rs.getString("genero"));
+				candidato.setTempoExperiencia(rs.getInt("tempoExperiencia"));
+				candidato.setIdArea(rs.getLong("idArea"));
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return candidato;
 	}
-
 	
 	public List<Candidato> selectCandidatoByArea(int idArea) {
 		List<Candidato> candidatos = new ArrayList<Candidato>();
